@@ -40,20 +40,15 @@ def extract_names(filename):
   year_match = re.search(r'Popularity in ([0-9][0-9][0-9][0-9])', read_data)
   year = year_match.group(1)
   name_rank_match = re.findall(r'<td>([0-9]+)</td><td>(\w+)</td><td>(\w+)</td>', read_data)
-  name_rank_dict = {} 
-  for tuple in name_rank_match:
-	name_rank_dict[tuple[1]] = str(tuple[0])
-	name_rank_dict[tuple[2]] = str(tuple[0])
-  dict_cont = name_rank_dict.items()
-  for x in range(len(dict_cont)):
-    dict_cont[x] = dict_cont[x][0] + ' ' + dict_cont[x][1]
-  sorted_items = sorted(dict_cont)  
+  name_rank_list = [x[1] + ' ' +  x[0] for x in name_rank_match] + [x[2] + ' ' + x[0] for x in name_rank_match]  
+  return [year] + sorted(name_rank_list)
+
   """
   Given a file name for baby.html, returns a list starting with the year string
   followed by the name-rank strings in alphabetical order.
   ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
   """
-  return [year] + sorted_items
+ 
 
 
 def main():
